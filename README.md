@@ -96,3 +96,19 @@ geliştirilmiştir.
 cd frontend/library-management-client
 npm install
 npm run dev
+
+## Reservation Pages
+
+- `/my-reservations`: Öğrencinin kitap ve oda rezervasyonları
+- `/rooms`: Uygun oda sorgulama ve rezervasyon oluşturma
+- `/books/{id}`: Kitap rezervasyonu oluşturma
+
+## Admin Panel
+
+- `/admin`: Yönetici genel bakış ekranı
+- `/admin/books`: Kitap ekleme, güncelleme ve silme
+- `/admin/rooms`: Çalışma odası yönetimi
+- `/admin/reservations`: Kitap ve oda rezervasyonlarının yönetimi
+
+Yönetici sayfaları rol tabanlı korumalı yönlendirme
+bileşeniyle yalnızca Admin rolüne açılmıştır.

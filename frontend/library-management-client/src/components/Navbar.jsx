@@ -70,6 +70,24 @@ export default function Navbar() {
           >
             Çalışma Odaları
           </NavLink>
+          {isAuthenticated && (
+            <NavLink
+                to="/my-reservations"
+                className={getNavLinkClass}
+            >
+                Rezervasyonlarım
+            </NavLink>
+            )}
+
+            {isAdmin && (
+            <NavLink
+                to="/admin"
+                className={getNavLinkClass}
+            >
+                Yönetici Paneli
+            </NavLink>
+            )}
+          
         </nav>
 
         <div className="flex items-center gap-3">

@@ -1,15 +1,32 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import {
+  Link,
+  useNavigate,
+  useParams,
+} from "react-router";
 import bookApi from "../api/bookApi";
+import reservationApi from "../api/reservationApi";
 import LoadingSpinner from "../components/LoadingSpinner";
+import useAuth from "../hooks/useAuth";
 import getApiErrorMessage from "../utils/getApiErrorMessage";
 
 export default function BookDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const [book, setBook] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [isReserving, setIsReserving] =
+    useState(false);
+
+  const [actionMessage, setActionMessage] =
+    useState("");
+
+  const [actionError, setActionError] =
+    useState("");
 
   useEffect(() => {
     let isActive = true;
@@ -46,6 +63,48 @@ export default function BookDetailPage() {
       isActive = false;
     };
   }, [id]);
+
+  async function handleReserveBook() {
+    if (!isAuthenticated) {
+      navigate("/login", {
+        state: {
+          from: {
+            pathname: `/books/${id}`,
+          },
+        },
+      });
+
+      return;
+    }
+
+    setIsReserving(true);
+    setActionMessage("");
+    setActionError("");
+
+    try {
+      const reservation =
+        await reservationApi.reserveBook(book.id);
+
+      setActionMessage(
+        "Kitap rezervasyonu başarıyla oluşturuldu.",
+      );
+
+      setBook((currentBook) => ({
+        ...currentBook,
+        availableStock: reservation.availableStock,
+        isAvailable: reservation.availableStock > 0,
+      }));
+    } catch (requestError) {
+      setActionError(
+        getApiErrorMessage(
+          requestError,
+          "Kitap rezervasyonu oluşturulamadı.",
+        ),
+      );
+    } finally {
+      setIsReserving(false);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -122,7 +181,10 @@ export default function BookDetailPage() {
               ["Yayınevi", book.publisher ?? "-"],
               ["Basım yılı", book.publicationYear],
               ["Toplam stok", book.totalStock],
-              ["Kullanılabilir stok", book.availableStock],
+              [
+                "Kullanılabilir stok",
+                book.availableStock,
+              ],
             ].map(([label, value]) => (
               <div
                 key={label}
@@ -148,6 +210,33 @@ export default function BookDetailPage() {
               {book.shelfLocation}
             </p>
           </div>
+
+          {actionMessage && (
+            <div className="mt-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">
+              {actionMessage}
+            </div>
+          )}
+
+          {actionError && (
+            <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+              {actionError}
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={handleReserveBook}
+            disabled={
+              !book.isAvailable || isReserving
+            }
+            className="mt-6 w-full rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+          >
+            {isReserving
+              ? "Rezervasyon oluşturuluyor..."
+              : book.isAvailable
+                ? "Kitabı Ayırt"
+                : "Kitap Stokta Yok"}
+          </button>
         </div>
       </div>
     </section>
