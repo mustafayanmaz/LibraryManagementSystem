@@ -122,13 +122,16 @@ public class ApplicationDbContext(
             });
 
         builder.Entity<RoomReservation>()
-            .ToTable("RoomReservations", table =>
+            .HasIndex(reservation => new
             {
-                table.HasCheckConstraint(
-                    "CK_RoomReservations_Time",
-                    "\"EndTime\" > \"StartTime\"");
-            });
-            
+                reservation.UserId,
+                reservation.ReservationDate,
+                reservation.StartTime,
+                reservation.EndTime
+            })
+            .HasDatabaseName(
+                "IX_RoomReservations_User_Date_Time");
+                    
         builder.Entity<BookReservation>()
             .HasIndex(reservation => new
             {
@@ -140,7 +143,7 @@ public class ApplicationDbContext(
                 "UX_BookReservations_User_Book_Active")
             .HasFilter(
                 "\"Status\" IN ('Pending', 'Approved')");
-                
+
         SeedData.Seed(builder);
     }
 }

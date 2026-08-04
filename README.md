@@ -55,3 +55,23 @@ Kitap ekleme, güncelleme ve silme işlemleri yalnızca Admin rolüne açıktır
 
 Aktif rezervasyon oluşturulduğunda kullanılabilir kitap stoğu azaltılır.
 İptal edilen, tamamlanan veya süresi dolan rezervasyonlarda stok yeniden artırılır.
+
+## Study Room Endpoints
+
+- `GET /api/study-rooms`: Çalışma odalarını listeleme
+- `GET /api/study-rooms/available`: Uygun odaları sorgulama
+- `POST /api/study-rooms`: Oda ekleme (Admin)
+- `PUT /api/study-rooms/{id}`: Oda güncelleme (Admin)
+- `DELETE /api/study-rooms/{id}`: Oda silme (Admin)
+
+## Room Reservation Endpoints
+
+- `POST /api/room-reservations`: Oda rezervasyonu oluşturma
+- `GET /api/room-reservations/my`: Kullanıcının rezervasyonları
+- `PUT /api/room-reservations/{id}/cancel`: Rezervasyon iptali
+- `GET /api/room-reservations`: Tüm rezervasyonlar (Admin)
+- `PUT /api/room-reservations/{id}/status`: Durum güncelleme (Admin)
+
+Çakışan oda ve kullanıcı rezervasyonları engellenmektedir.
+Rezervasyonlar 08.00–22.00 saatleri arasında ve en fazla iki saat
+olacak şekilde oluşturulabilir.
