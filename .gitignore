@@ -1,0 +1,25 @@
+# .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+
+# React / Node
+**/node_modules/
+**/dist/
+
+# Editors
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
