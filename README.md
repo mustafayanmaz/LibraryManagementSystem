@@ -43,3 +43,15 @@ Kimlik doğrulama işlemlerinde JWT Bearer kullanılmaktadır.
 - `/api/shelves`: Raf yönetimi
 
 Kitap ekleme, güncelleme ve silme işlemleri yalnızca Admin rolüne açıktır.
+
+## Book Reservation Endpoints
+
+- `POST /api/book-reservations`: Kitap rezervasyonu oluşturma
+- `GET /api/book-reservations/my`: Kullanıcının rezervasyonları
+- `GET /api/book-reservations/{id}`: Rezervasyon detayı
+- `PUT /api/book-reservations/{id}/cancel`: Rezervasyon iptali
+- `GET /api/book-reservations`: Tüm rezervasyonlar (Admin)
+- `PUT /api/book-reservations/{id}/status`: Durum güncelleme (Admin)
+
+Aktif rezervasyon oluşturulduğunda kullanılabilir kitap stoğu azaltılır.
+İptal edilen, tamamlanan veya süresi dolan rezervasyonlarda stok yeniden artırılır.

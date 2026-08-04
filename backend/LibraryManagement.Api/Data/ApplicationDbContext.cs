@@ -128,7 +128,19 @@ public class ApplicationDbContext(
                     "CK_RoomReservations_Time",
                     "\"EndTime\" > \"StartTime\"");
             });
-
+            
+        builder.Entity<BookReservation>()
+            .HasIndex(reservation => new
+            {
+                reservation.UserId,
+                reservation.BookId
+            })
+            .IsUnique()
+            .HasDatabaseName(
+                "UX_BookReservations_User_Book_Active")
+            .HasFilter(
+                "\"Status\" IN ('Pending', 'Approved')");
+                
         SeedData.Seed(builder);
     }
 }
