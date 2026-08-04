@@ -16,3 +16,12 @@ rezervasyon oluşturabildiği full stack kütüphane yönetim sistemi.
 
 - `backend`: ASP.NET Core Web API
 - `frontend`: React kullanıcı arayüzü
+
+## Authentication Endpoints
+
+- `POST /api/auth/register`: Öğrenci kaydı
+- `POST /api/auth/login`: Kullanıcı girişi
+- `GET /api/auth/profile`: Giriş yapan kullanıcı profili
+- `GET /api/auth/admin-check`: Admin rolü kontrolü
+
+Kimlik doğrulama işlemlerinde JWT Bearer kullanılmaktadır.
