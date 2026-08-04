@@ -75,3 +75,24 @@ Aktif rezervasyon oluşturulduğunda kullanılabilir kitap stoğu azaltılır.
 Çakışan oda ve kullanıcı rezervasyonları engellenmektedir.
 Rezervasyonlar 08.00–22.00 saatleri arasında ve en fazla iki saat
 olacak şekilde oluşturulabilir.
+
+## Frontend
+
+Frontend uygulaması React, Vite ve Tailwind CSS ile
+geliştirilmiştir.
+
+### Frontend Sayfaları
+
+- `/`: Ana sayfa
+- `/login`: Kullanıcı girişi
+- `/register`: Öğrenci kaydı
+- `/books`: Kitap arama ve filtreleme
+- `/books/{id}`: Kitap detayları ve raf konumu
+- `/rooms`: Aktif çalışma odaları
+
+### Frontend Kurulumu
+
+```bash
+cd frontend/library-management-client
+npm install
+npm run dev
